@@ -57,20 +57,7 @@ namespace ConsoleApplication1
             {
                 return null;
             }
-            #region  another version
-            //#another version
-            //for (int i = 0; i < tiles.GetLength(0); i++)
-            //{
-            //    for (int j = 0; j < tiles.GetLength(0); j++)
-            //    {
-            //        if (tiles[i, j] == value)
-            //        {
-            //            return new Coordinates(i, j);
-            //        }
-            //    }
-            //}
-            //return null;
-            #endregion
+           
         }
         public int Shift(int value)
         {
@@ -79,31 +66,21 @@ namespace ConsoleApplication1
             {
                 return -1;
             }
-            tiles[emptyTile.X, emptyTile.Y] = value;
-            tiles[coordinatesOfValue.X, coordinatesOfValue.Y] = 0;
-            emptyTile = coordinatesOfValue;
-            //update coordinates
-            Coordinate temp = valuesToCoordinates[value];
-            valuesToCoordinates[value] = emptyTile;
-            emptyTile = temp;
+            else
+            {
+                tiles[emptyTile.X, emptyTile.Y] = value;
+                tiles[coordinatesOfValue.X, coordinatesOfValue.Y] = 0;
+                emptyTile = coordinatesOfValue;
+                //update coordinates
+                Coordinate temp = valuesToCoordinates[value];
+                valuesToCoordinates[value] = emptyTile;
+                emptyTile = temp;
 
-            return 1;
+                return 1;
+            }
         }
-        //public static void PrintField(Game game)  //another version
-        //{
-        //    for (int i = 0; i < game.fieldSize; i++)
-        //    {
-        //        for (int j = 0; j < game.fieldSize; j++)
-        //        {
-        //            if (game[i, j] != 0)
-        //                Console.Write("{0,3}|", game[i, j]);
-        //            else
-        //                Console.Write("   |");
-        //        }
-        //        Console.Write("\n{0}\n", new String('-', game.fieldSize * 4));
-        //    }
-        //}   
-        public bool IsVictory()
+        
+        public bool IsVictory() //проверить правильность условия!!!!!!!!!!!!!!!!!!!!!!!
         {
             for (int i = 0; i < fieldSize; i++)
             {
