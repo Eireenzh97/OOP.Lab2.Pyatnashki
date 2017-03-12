@@ -10,7 +10,7 @@ namespace ConsoleApplication1
     {
         public readonly int fieldSize;
         Coordinate emptyTile;
-        int[,] tiles;
+        public int[,] tiles;
         Dictionary<int, Coordinate> valuesToCoordinates;
 
         public int this[int x, int y]
