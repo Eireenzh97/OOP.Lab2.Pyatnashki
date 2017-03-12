@@ -9,29 +9,29 @@ namespace ConsoleApplication1
     class Game
     {
         public readonly int fieldSize;
-        Coordinate emptyTile; //ноль
-        public int[,] tiles;//массив костяшек
+        Coordinate emptyTile; 
+        public int[,] tiles;
         Dictionary<int, Coordinate> valuesToCoordinates;
 
-        public int this[int x, int y] //Что такое индексатор?
+        public int this[int x, int y] 
         {
             get { return tiles[x, y]; }
             set { tiles[x, y] = value; }
         }
-        public Game(params int[] tiles) //позволяет передавать разное кол-во аргументов
+        public Game(params int[] tiles) 
         {
-            valuesToCoordinates = new Dictionary<int, Coordinate>(); //словаь нужен чтобы значениям поставить в соответствие координаты
+            valuesToCoordinates = new Dictionary<int, Coordinate>(); 
             double temp = Math.Sqrt(tiles.Length); 
 
-            if (temp % 1 != 0) throw new Exception("Некорректное количество значений"); //чтобы поле было квадратным, т.е 1 значение пустое или 4, 9, 16...
+            if (temp % 1 != 0) throw new Exception("Некорректное количество значений"); 
             if (!ExistZero(tiles)) throw new Exception("Не определена пустая ячейка!"); 
 
             fieldSize = Convert.ToInt32(temp);
-            this.tiles = new int[fieldSize, fieldSize];//создаём квадратное поле
+            this.tiles = new int[fieldSize, fieldSize];
             FillArray(tiles);
-            emptyTile = GetLocation(0); //получаем расположение пустой ячейки
+            emptyTile = GetLocation(0); 
         }
-        public Game(int fieldSize) //другой конструктор, передаём размер поля и он рандомно заполняет
+        public Game(int fieldSize) 
         {
             this.fieldSize = fieldSize;
             valuesToCoordinates = new Dictionary<int, Coordinate>();
@@ -47,7 +47,7 @@ namespace ConsoleApplication1
             GetRandomValues();
             emptyTile = GetLocation(0);
         }
-        public Coordinate GetLocation(int value)//получает координаты значения
+        public Coordinate GetLocation(int value)
         {
             try
             {
@@ -61,45 +61,33 @@ namespace ConsoleApplication1
         }
         public int Shift(int value)
         {
-            Coordinate coordinatesOfValue = GetLocation(value);
-            if (coordinatesOfValue == null || !CanShift(coordinatesOfValue) || (value == 0))
+            Coordinate coordinateOfValue = GetLocation(value);
+            if (coordinateOfValue == null ||
+                Math.Sqrt(Math.Pow((coordinateOfValue.X - emptyTile.X), 2) + Math.Pow((coordinateOfValue.Y - emptyTile.Y), 2)) != 1 || 
+                (value == 0))
             {
                 return 0;
             }
             tiles[emptyTile.X, emptyTile.Y] = value;
-            tiles[coordinatesOfValue.X, coordinatesOfValue.Y] = 0;
+            tiles[coordinateOfValue.X, coordinateOfValue.Y] = 0;
 
-            //update coordinates
             Coordinate temp = valuesToCoordinates[value];
             valuesToCoordinates[value] = emptyTile;
             emptyTile = temp;
 
             return 1;
         }
-        public static void PrintGame(Game game)  //печатать игру красиво
-        {
-            for (int i = 0; i < game.fieldSize; i++)
-            {
-                for (int j = 0; j < game.fieldSize; j++)
-                {
-                    if (game[i, j] != 0)
-                        Console.Write("{0,3}|", game[i, j]);
-                    else
-                        Console.Write("   |");
-                }
-                Console.Write("\n{0}\n", new String('-', game.fieldSize * 4));
-            }
-        }
-        public bool IsVictory() //проверка на победу
+       
+        public bool IsVictory() 
         {
             for (int i = 0; i < fieldSize; i++)
             {
-                for (int j = 0; j < fieldSize; j++)                                                          //another version
-                {                                                                                            //int preceding = -1;
-                    if ((i != 0 && j != 0) &&                                                                 //foreach(var item in tiles)
-                        (tiles[i, j] < (j == 0 && i != 0 ? tiles[i - 1, fieldSize - 1] : tiles[i, j - 1])))    //{
-                        return false;                                                                        //   if(preceding>item) return false  
-                }                                                                                            //   preceding = item; 
+                for (int j = 0; j < fieldSize; j++)                                                          
+                {                                                                                            
+                    if ((i != 0 && j != 0) &&                                                                 
+                        (tiles[i, j] < (j == 0 && i != 0 ? tiles[i - 1, fieldSize - 1] : tiles[i, j - 1])))    
+                        return false;                                                                         
+                }                                                                                             
             }
             return true;
         }
@@ -125,10 +113,7 @@ namespace ConsoleApplication1
                 }
             }
         }
-        private bool CanShift(Coordinate coordinateOfValue) //проверяет можно ли переместить значение
-        {
-            return Math.Sqrt(Math.Pow((coordinateOfValue.X - emptyTile.X), 2) + Math.Pow((coordinateOfValue.Y - emptyTile.Y), 2)) == 1;
-        }
+        
         void FillArray(int[] tiles) //проверяет на правильность заполнения поля игры //ContainsKey-проверяет содержится ли указанныйключ в словаре
         {
             int indexCount = 0;
@@ -141,11 +126,11 @@ namespace ConsoleApplication1
                     {
                         throw new Exception("Повторяются значения");
                     }
-                    valuesToCoordinates[tiles[indexCount++]] = new Coordinate(i, j); //новая координата создаётся
+                    valuesToCoordinates[tiles[indexCount++]] = new Coordinate(i, j); 
                 }
             }
         }
-        private bool ExistZero(int[] tiles) //проверяет есть ли ноль
+        private bool ExistZero(int[] tiles) 
         {
             return tiles.Contains(0);
         }

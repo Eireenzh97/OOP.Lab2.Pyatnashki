@@ -10,54 +10,59 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            //---> 1
+            //первый варинт
             //string path = "C:\\Users\\Ira\\Desktop\\game.txt";
             //List<int> listOfValues = GetValuesFromFile.GetList(path);
-
-
             //if (listOfValues != null)
             //{
-            //    Game one = new Game(listOfValues.ToArray());
-            //    StartGame(one);
+            //    Game game = new Game(listOfValues.ToArray());
+            //    StartGame(game);
             //}
             //else
             //{
             //    Console.WriteLine("Данные не получены, проверьте доступ к файлу, путь к нему и корректность данных");
             //}
 
-            //---> 2
-            //Game one = new Game(-1, 22, 3, 4, 5, 6, 7, 8, 11, 9,10, 12, 13,14,15, 0);
+            //второй варинт
+            //Game game = new Game(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0);
 
-            //---> 3
-            Game one = new Game(GetSizeByConsole());
-
-            StartGame(one);
-            Console.ReadKey();
+            //третий вариант
+            Game game = new Game(GetSize());
+            StartGame(game);
+            Console.ReadLine();
         }
         static void StartGame(Game game)
         {
-            
+
+           
             while (!game.IsVictory())
             {
                 int value = 0;
                 string tempLine;
-                Game.PrintGame(game);
+                Print(game);
                 Console.WriteLine("Какое значение перенeсти?");
                 tempLine = Console.ReadLine();
-                if (tempLine.ToLower() == "end")
-                {
-                    Console.WriteLine("Вы вышли из игры!");
-                    return;
-                }
                 
+                try
+                {
+                    value = int.Parse(tempLine);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
                 if (game.Shift(value) == 0)
                 {
-                    Console.WriteLine("Ход невозможен!");
-                }     
+                    Console.WriteLine("Недопустимый ход!");
+                }
+                    
             }
-            Console.WriteLine("Congratulations! You won a cat!!!");
+            Console.WriteLine("Ваша игра закончена!");
+            Print(game);
+
+           
         }
-        static int GetSizeByConsole()
+        static int GetSize()
         {
             Console.WriteLine("Введите размер стороны поля: ");
 
