@@ -10,7 +10,7 @@ namespace ConsoleApplication1
     {
         public readonly int fieldSize;
         Coordinate emptyTile; //ноль
-        int[,] tiles;//массив костяшек
+        public int[,] tiles;//массив костяшек
         Dictionary<int, Coordinate> valuesToCoordinates;
 
         public int this[int x, int y] //Что такое индексатор?
