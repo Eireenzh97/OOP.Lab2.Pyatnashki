@@ -11,14 +11,14 @@ namespace ConsoleApplication1
         static void Main(string[] args)
         {
             //---> 1
-            //string path = "C:\\Users\\pastkhuf\\Desktop\\werto.txt";
+            //string path = "C:\\Users\\Ira\\Desktop\\game.txt";
             //List<int> listOfValues = GetValuesFromFile.GetList(path);
 
 
             //if (listOfValues != null)
             //{
             //    Game one = new Game(listOfValues.ToArray());
-            //    StartGameByConsole(one);
+            //    StartGame(one);
             //}
             //else
             //{
@@ -31,12 +31,12 @@ namespace ConsoleApplication1
             //---> 3
             Game one = new Game(GetSizeByConsole());
 
-            StartGameByConsole(one);
+            StartGame(one);
             Console.ReadKey();
         }
-        static void StartGameByConsole(Game game)
+        static void StartGame(Game game)
         {
-            Console.WriteLine("Для выхода введите: END");
+            
             while (!game.IsVictory())
             {
                 int value = 0;
@@ -49,14 +49,7 @@ namespace ConsoleApplication1
                     Console.WriteLine("Вы вышли из игры!");
                     return;
                 }
-                try
-                {
-                    value = int.Parse(tempLine);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
+                
                 if (game.Shift(value) == 0)
                 {
                     Console.WriteLine("Ход невозможен!");

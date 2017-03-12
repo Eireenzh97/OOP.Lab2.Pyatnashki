@@ -76,7 +76,7 @@ namespace ConsoleApplication1
 
             return 1;
         }
-        public static void PrintGame(Game game)  //печатать игру
+        public static void PrintGame(Game game)  //печатать игру красиво
         {
             for (int i = 0; i < game.fieldSize; i++)
             {
@@ -90,7 +90,7 @@ namespace ConsoleApplication1
                 Console.Write("\n{0}\n", new String('-', game.fieldSize * 4));
             }
         }
-        public bool IsVictory()
+        public bool IsVictory() //проверка на победу
         {
             for (int i = 0; i < fieldSize; i++)
             {
