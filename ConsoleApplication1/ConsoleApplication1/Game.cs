@@ -102,19 +102,20 @@ namespace ConsoleApplication1
         }
         public static void StartGame(Game game)
         {
-            Console.WriteLine("Для выхода введите: END");
+            Console.WriteLine("Для выхода введите: END. Для продолжения нажмите Enter.");
+            string tempLine;
+            tempLine = Console.ReadLine();
+            if (tempLine.ToLower() == "end")
+            {
+                Console.WriteLine("Вы вышли игры!");
+                return;
+            }
             while (!game.IsVictory())
             {
                 int value = 0;
-                string tempLine;
                 PrintGame.Field(game);
                 Console.WriteLine("Какое значение перенeсти?");
-                tempLine = Console.ReadLine();
-                if (tempLine.ToLower() == "end")
-                {
-                    Console.WriteLine("Вы вышли игры!");
-                    return;//?????/
-                }
+                
                 try
                 {
                     value = int.Parse(Console.ReadLine());
@@ -123,7 +124,7 @@ namespace ConsoleApplication1
                 {
                     Console.WriteLine(e.Message);
                 }
-                if (game.Shift(value) == -1)
+                if (game.Shift(value) == 0)
                     Console.WriteLine("Недопустимый ход!");
             }
             Console.WriteLine("Поздравляю! Вы победили!");
