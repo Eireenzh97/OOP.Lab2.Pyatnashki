@@ -25,7 +25,7 @@ namespace ConsoleApplication1
             double temp = Math.Sqrt(tiles.Length);
 
             if (temp % 1 != 0) throw new Exception("Некорректное количество значений");
-            if (!ExistZero(tiles)) throw new Exception("Не определена пустая ячейка!");
+           // if (!ExistZero(tiles)) throw new Exception("Не определена пустая ячейка!");
             fieldSize = Convert.ToInt32(temp);
             this.tiles = new int[fieldSize, fieldSize]; 
             FillArray(tiles);
@@ -86,15 +86,30 @@ namespace ConsoleApplication1
             {
                 for (int j = 0; j < fieldSize; j++)
                 {
-                    this.tiles[i, j] = tiles[indexCount];
 
-                    if (GetLocation(tiles[indexCount++]) == null)
-                    {
-                        throw new Exception("Значения не должны повторяться");
-                    }
+                    this.tiles[i, j] = tiles[indexCount++];
 
                 }
             }
+            int count = 0;
+            for (int k = 0; k < tiles.Length; k++)
+            {
+                int value1 = tiles[k];
+                for (int i = 0; i < tiles.Length; i++)
+                {
+                    if (value1 == tiles[i] )
+                    {
+                        count++;
+                    }
+                }
+                if (count > 1)
+                {
+                    throw new Exception("Значения не должны повторяться");
+                }
+                count = 0;
+            }
+            
+
         }
         private bool ExistZero(int[] tiles)
         {
