@@ -25,7 +25,7 @@ namespace ConsoleApplication1
             double temp = Math.Sqrt(tiles.Length);
 
             if (temp % 1 != 0) throw new Exception("Некорректное количество значений");
-           // if (!ExistZero(tiles)) throw new Exception("Не определена пустая ячейка!");
+            if (!ExistZero(tiles)) throw new Exception("Не определена пустая ячейка!");
             fieldSize = Convert.ToInt32(temp);
             this.tiles = new int[fieldSize, fieldSize]; 
             FillArray(tiles);
@@ -67,7 +67,7 @@ namespace ConsoleApplication1
             {
                 for (int j = 0; j < fieldSize; j++)
                 {
-                    if ((i != 0 && j != 0) &&
+                    if ((i != 0 && j != 0) && tiles[fieldSize-1, fieldSize-1] != 0 &&
                         (tiles[i, j] < (j == 0 && i != 0 ? tiles[i - 1, fieldSize - 1] : tiles[i, j - 1])))
                         return false;
                 }
